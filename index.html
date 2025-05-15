@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Lecteur EPUB</title>
+  <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+    }
+    #menu {
+      padding: 10px;
+      background: #f2f2f2;
+      border-bottom: 1px solid #ccc;
+    }
+    #viewer {
+      height: calc(100vh - 50px);
+      width: 100vw;
+    }
+    select {
+      padding: 6px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="menu">
+  <label for="book-select">Choisir un livre :</label>
+  <select id="book-select">
+    <option value="">-- Sélectionnez --</option>
+    <option value="un_nouv_livre_1.epub">Livre 1</option>
+    <option value="un_nouv_livre_2.epub">Livre 2</option>
+    <option value="un_nouv_livre_3.epub">Livre 3</option>
+    <option value="un_nouv_livre_4.epub">Livre 4</option>
+    <option value="un_nouv_livre_5.epub">Livre 5</option>
+  </select>
+</div>
+
+<div id="viewer"></div>
+
+<script>
+  let book;
+  const select = document.getElementById("book-select");
+
+  select.addEventListener("change", function () {
+    if (book) {
+      book.destroy();
+    }
+    const file = this.value;
+    if (file) {
+      book = ePub(file);
+      const rendition = book.renderTo("viewer", {
+        width: "100%",
+        height: "100%"
+      });
+      rendition.display();
+    }
+  });
+</script>
+
+</body>
+</html>
